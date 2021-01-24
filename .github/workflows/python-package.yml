@@ -4,6 +4,8 @@
 name: Python package
 
 on:
+  schedule:
+    - cron: '* * * * *'
   push:
     branches: [ main ]
   pull_request:
@@ -37,3 +39,4 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+        python ClockIn.py
