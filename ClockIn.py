@@ -4,37 +4,35 @@ from hashlib import md5
 from urllib import parse
 import time
 import urllib3
-
+import sys
 urllib3.disable_warnings()
 
-session = requests.Session()
 
 # --------------------------------------------------------------------------
-phone = '17516467303'  # 换成成你的手机号
-pwd = '13166209219yml'  # 换成你的密码
-name = "杨梦龙"  # 姓 名
-shenfenzheng = '411729200011071213'  # 身份证号
-xueyuan = '智能工程学院'  # 学院
-zhuanye = '软件工程'  # 专业
-banji = '19101101'  # 班级
-xuehao = '1905170512'  # 学号
-weizhi = {"address": "上海市上海市静安区天潼路619号",  # 换成自己的打卡定位地址
-          "lat": 31.249161,  # 换成自己的签到定位维度信息
-          "lng": 121.487899,  # 经度
-          "code": "1"}
-diqu = '上海市-市辖区-闵行区'  # 地区 如河南省-郑州市-金水区
-deviceToken = '13065ffa4e6b403bf33'  # 参见deviceToken获取
-uid = 'UID_pq4JDURb68ayfgnehqQKWZ0KHgVl'  # 接收消息的微信uid
+phone = sys.argv[1]  # 换成成你的手机号
+pwd = sys.argv[2]  # 换成你的密码
+name = sys.argv[3]  # 姓 名
+ID_card = sys.argv[4]  # 身份证号
+College = sys.argv[5]  # 学院
+profession = sys.argv[6]  # 专业
+Class = sys.argv[7]  # 班级
+student_ID = sys.argv[8]  # 学号
+address = sys.argv[9]
+lat = sys.argv[10]
+lng = sys.argv[11]
+Positioning = {"address":address,"lat":float(lat),"lng":lng,"code":"1"}
+District = sys.argv[12]  # 地区 如河南省-郑州市-金水区
+deviceToken = sys.argv[13]  # 参见deviceToken获取
+sckey = sys.argv[14]  # sever酱sckey
 # ---------------------------------------------------------------------------
-evening_switch = 0  # 晚上宿舍签到开关，1为开启，0为关闭。不需要签到功能请把 "1" 改为 "0"
-flag = False
-nowtime = time.strftime("%Y-%m-%d", time.localtime())
-Hour_Minutes = time.strftime('%H:%M')
+session = requests.Session()
+date = time.strftime('%Y-%m-',time.localtime())
+day = int(time.strftime('%d',time.localtime()))+1
+date = date+str(day)
 
-
-# Qmsg消息推送模块
-def Qmsg(msg, uid):
-    url = f'http://wxpusher.zjiecode.com/api/send/message/?appToken=AT_BxtNRNubGOsZLnd3u6RsQNgZxl9OF19X&content={nowtime}{msg}&uid={uid}'
+# Wxpush()消息推送模块
+def Wxpush(msg):
+    url = f'https://sc.ftqq.com/{sckey}.send?text={date}{msg}'
     requests.get(url)
 
 
@@ -57,19 +55,19 @@ def login():
         'mobileSystem': '9',
         'appVersion': '1.6.4',
         'mobileVersion': 'V1809A',
-        # 每个设备是唯一的不能随意更改
         'deviceToken': deviceToken,  # 换成你抓包得到的deviceToken
-        'pushToken': '0868765037939765300003465800CN01',  # 可以随意更改
-        'romInfo': 'hw'  # 可以随意更改
+        'pushToken': '0868765546475757478765800CN01',
+        'romInfo': 'hw'
     }
 
     response = session.post(url=url, headers=header, data=data)
     if response.json()['status'] == 1:
         print('login_success!')
-        flag = True
+        flag = 1
     else:
         msg = parse.quote_plus(response.json()['msg'])
-        Qmsg(msg, uid)
+        Wxpush(msg)
+        flag = 0
     return response.json()['data']
 
 
@@ -86,9 +84,9 @@ def sign_in(token):
         'Accept-Encoding': 'gzip',
         'Content-Length': '536'
     }
-    datason = {"location": weizhi, "name": name, "phone": phone, "credentialType": "身份证",
-               "credentialCode": shenfenzheng,
-               "college": xueyuan, "major": zhuanye, "className": banji, "code": xuehao, "nowLocation": diqu,
+    datason = {"location": Positioning, "name": name, "phone": phone, "credentialType": "身份证",
+               "credentialCode": ID_card,
+               "college": College, "major": profession, "className": Class, "code": student_ID, "nowLocation": District,
                "temperature": "36.6", "observation": "否", "confirmed": "否", "goToHuiBei": "否", "contactIllPerson": "否",
                "isFamilyStatus": "否", "health": 0, "help": ""}
     data = {
@@ -100,10 +98,10 @@ def sign_in(token):
     response = session.post(url=url, headers=header, data=data)
     if response.json()['status'] == 1:
         msg = '打卡成功'
-        Qmsg(msg, uid)
+        Wxpush(msg)
     else:
         msg = parse.quote_plus(response.json()['msg'])
-        Qmsg(msg, uid)
+        Wxpush(msg)
 
 
 # 获取每日宿舍签到的signInId模块
@@ -121,7 +119,6 @@ def get_signInId(token):
         'page': '0',
         'size': '10'
     }
-    # result = session.get(url=url,headers=header,data=data)
     try:
         signInId = session.get(url=url, headers=header, data=data).json()['data']['content'][0]['id']
         return signInId
@@ -143,32 +140,29 @@ def sign_in_evening(token):
         'Content-Length': '146'
     }
     data = {
-        "locale": "河南省郑州市金水区风华东路15号靠近郑州航空工业管理学院学生公寓18栋",  # 换成自己的签到定位地址
-        "lat": "34.786959",  # 换成自己的签到定位维度信息
-        "lng": "113.791111",  # 换成自己的签到定位经度信息
+        "locale": str(Positioning["address"]),
+        "lat": Positioning["lat"],
+        "lng": Positioning["lng"],
         "signInId": get_signInId(token)
     }
     data = json.dumps(data)
     response = session.post(url=url, headers=header, data=data)
-    # title = '指点天下晚上签到结果'
     if response.json()['status'] == 1:
         print("success!")
-
     else:
         print("fail!")
     msg = parse.quote_plus(response.json()['msg'])
-    Qmsg(msg, uid)
+    Wxpush(msg)
 
+if __name__ =="__main__":
+    token = login()
 
-token = login()
-time.sleep(3)
-get_signInId(token)
-time.sleep(3)
-now_time = int(time.strftime("%H"))
-if flag:
-    if 22 <= now_time <= 23 and evening_switch == 1:
-        sign_in_evening(token)
+    time.sleep(3)
+    now_H = int(time.strftime("%H"))
+    if flag:
+        if 22 <= now_H <= 23:
+            sign_in_evening(token)
+        else:
+            sign_in(token)
     else:
-        sign_in(token)
-else:
-    pass
+        pass
