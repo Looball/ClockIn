@@ -28,5 +28,5 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: pip install requests
-    - name: Test with pytest
+    - name: Run pyshell
       run: python ClockIn.py ${{secrets.PHONE}} ${{secrets.PASSWORD}} ${{secrets.NAME}} ${{secrets.ID_CARD}} ${{secrets.COLLEGE}} ${{secrets.PROFESSION}} ${{secrets.CLASS}} ${{secrets.STUDENT_ID}} ${{secrets.ADDRESS}} ${{secrets.LAT}} ${{secrets.LNG}} ${{secrets.DISTRICT}} ${{secrets.DEVICETOKEN}} ${{secrets.SCKEY}}
