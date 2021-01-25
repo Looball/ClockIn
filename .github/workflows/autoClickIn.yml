@@ -6,6 +6,7 @@ name: autoClickIn
 on:
   schedule:
     - cron: '0 17 * * *'
+    - cron: '0 14 * * *'
   push:
     branches: [ main ]
   pull_request:
