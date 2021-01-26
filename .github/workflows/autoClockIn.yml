@@ -6,8 +6,6 @@ name: autoClockIn
 on:
   schedule:
     - cron: '10 21 * * *'
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
