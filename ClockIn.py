@@ -27,12 +27,12 @@ sckey = sys.argv[14]
 # ---------------------------------------------------------------------------
 session = requests.Session()
 date = time.strftime('%Y年%m月',time.localtime())
-day = int(time.strftime('%d日',time.localtime()))+1 # 时间慢了一点，加一下
+day = int(time.strftime('%d',time.localtime()))+1 # 时间慢了一点，加一下
 date = date+str(day)
 
 # Wxpush()消息推送模块
 def Wxpush(msg):
-    url = f'https://sc.ftqq.com/{sckey}.send?text={date}{msg}'
+    url = f'https://sc.ftqq.com/{sckey}.send?text={date}日{msg}'
     requests.get(url)
 
 
