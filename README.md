@@ -13,7 +13,7 @@ secret图片说明链接https://s3.ax1x.com/2021/01/26/svlE80.png
 
 #### 6.开启 Actions 并触发每日自动执行
 Github Actions 默认处于关闭状态，大家请手动开启 Actions ，执行一次工作流，验证是否可以正常工作。
-https://s3.ax1x.com/2021/01/27/sxXk1f.png
+https://s3.ax1x.com/2021/01/27/sxz1IJ.png
 #### 7.如果需要修改每日任务执行的时间，请修改 `.github/workflows/autoClockIn.yml`，在第 8 行左右位置找到下如下配置。
 
 ```yml
