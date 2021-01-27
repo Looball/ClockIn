@@ -26,8 +26,8 @@ deviceToken = sys.argv[13]  # 参见deviceToken获取
 sckey = sys.argv[14]  # sever酱sckey
 # ---------------------------------------------------------------------------
 session = requests.Session()
-date = time.strftime('%Y-%m-',time.localtime())
-day = int(time.strftime('%d',time.localtime()))+1
+date = time.strftime('%Y年%m月',time.localtime())
+day = int(time.strftime('%d日',time.localtime()))+1
 date = date+str(day)
 
 # Wxpush()消息推送模块
