@@ -9,25 +9,25 @@ urllib3.disable_warnings()
 
 
 # --------------------------------------------------------------------------
-phone = sys.argv[1]  # 换成成你的手机号
-pwd = sys.argv[2]  # 换成你的密码
-name = sys.argv[3]  # 姓 名
-ID_card = sys.argv[4]  # 身份证号
-College = sys.argv[5]  # 学院
-profession = sys.argv[6]  # 专业
-Class = sys.argv[7]  # 班级
-student_ID = sys.argv[8]  # 学号
+phone = sys.argv[1]
+pwd = sys.argv[2]
+name = sys.argv[3]
+ID_card = sys.argv[4]
+College = sys.argv[5] 
+profession = sys.argv[6]
+Class = sys.argv[7] 
+student_ID = sys.argv[8] 
 address = sys.argv[9]
 lat = sys.argv[10]
 lng = sys.argv[11]
 Positioning = {"address":address,"lat":float(lat),"lng":float(lng),"code":"1"}
-District = sys.argv[12]  # 地区 如河南省-郑州市-金水区
-deviceToken = sys.argv[13]  # 参见deviceToken获取
-sckey = sys.argv[14]  # sever酱sckey
+District = sys.argv[12] 
+deviceToken = sys.argv[13]
+sckey = sys.argv[14]
 # ---------------------------------------------------------------------------
 session = requests.Session()
 date = time.strftime('%Y年%m月',time.localtime())
-day = int(time.strftime('%d日',time.localtime()))+1
+day = int(time.strftime('%d日',time.localtime()))+1 # 时间慢了一点，加一下
 date = date+str(day)
 
 # Wxpush()消息推送模块
@@ -55,7 +55,7 @@ def login():
         'mobileSystem': '9',
         'appVersion': '1.6.4',
         'mobileVersion': 'V1809A',
-        'deviceToken': deviceToken,  # 换成你抓包得到的deviceToken
+        'deviceToken': deviceToken,  
         'pushToken': '0868765546475757478765800CN01',
         'romInfo': 'hw'
     }
