@@ -33,9 +33,12 @@ date = date+str(day)
 # Wxpush()消息推送模块
 def Wxpush(msg):
     url = f'https://sc.ftqq.com/{sckey}.send?text={date}日{msg}'
-    requests.get(url)
-
-
+    for _ in range(3):
+        err = requests.get(url)
+        if not err.json()['errno']:
+            break
+            
+            
 # 指点天下登录模块
 def login():
     url = 'http://app.zhidiantianxia.cn/api/Login/pwd'
@@ -156,7 +159,6 @@ def sign_in_evening(token):
 
 if __name__ =="__main__":
     token = login()
-
     time.sleep(3)
     now_H = int(time.strftime("%H"))
     if flag:
