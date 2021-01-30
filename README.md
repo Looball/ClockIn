@@ -11,6 +11,7 @@
 - 2.fork一份到自己仓库
 
 - 3.打开settings，找到secrets，新建secret如下
+#
 | secret_iD   | value                   |
 | ----------- | ----------------------- |
 | PHONE       | value                   |
