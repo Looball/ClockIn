@@ -7,7 +7,7 @@
 - 2.fork一份到自己仓库
 
 - 3.打开settings，找到secrets，新建secret如下
-| secret_iD   | value                   |
+ | secret_iD   | value                   |
 | ----------- | ----------------------- |
 | PHONE       | 登录手机号              |
 | PASSWORD    | 登录密码                |
