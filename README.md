@@ -6,10 +6,19 @@
 
 - 2.fork一份到自己仓库
 
-- 3.打开settings，找到secrets，新建secret
-[secret图片说明链接](https://s3.ax1x.com/2021/01/26/svlE80.png)
+- 3.打开settings，找到secrets，新建secret如下
+| secret_iD   | value                   |
+| ----------- | ----------------------- |
+| PHONE       | 登录手机号              |
+| PASSWORD    | 登录密码                |
+| ADDRESS     | 打卡定位地址            |
+| LAT         | 纬度                    |
+| LNG         | 经度                    |
+| DEVICETOKEN | 你抓包得到的devicetoken |
+| SCKEY       | sever酱                 |
 
-- 4.DEVICETOKEN获取方法可关注微信公众号“听说名字越长越容易通过WX审核“通过历史文章查看。
+- 4.DEVICETOKEN获取方法。
+[操作视频](https://mp.weixin.qq.com/s/9ww2373nxj3JyV4o1VAvAw)
 
 - 5.sever酱使用参见[官网](http://sc.ftqq.com/3.version)。
 
@@ -29,4 +38,4 @@ Github Actions 默认处于关闭状态，大家请手动开启 Actions ，执�
 - 8.经纬度可以进入[高德地图API](https://developer.amap.com/api/webservice/guide/api/georegeo#geo)下翻至服务示例，输入你的定位地点后于返回的数据中获取
 [点我看图](https://s3.ax1x.com/2021/01/28/y9Ml5Q.png)
 
-### Q群：717104836[点击链接加入群聊](https://jq.qq.com/?_wv=1027&k=oCdISxo1)
+### Q群：[点击链接加入群聊](https://jq.qq.com/?_wv=1027&k=oCdISxo1)
