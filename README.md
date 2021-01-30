@@ -1,9 +1,5 @@
 ## 疫情无小事,防控靠大家。真的有什么状况即时上报
-| 撒大苏打 | 手动 |      |
-| -------- | ---- | ---- |
-| 手动     | 手动 |      |
-| 手动     | 是的 |      |
-| 手动     | 手动 |      |
+
 ## 食用方法
 
 - 1.首先保证你有一个GitHub账号
@@ -11,16 +7,17 @@
 - 2.fork一份到自己仓库
 
 - 3.打开settings，找到secrets，新建secret如下
-#
+
 | secret_iD   | value                   |
 | ----------- | ----------------------- |
-| PHONE       | value                   |
-| PASSWORD    | value                   |
-| ADDRESS     | value                   |
-| LAT         | value                   |
-| LNG         | value                   |
-| DEVICETOKEN | value                   |
-| SCKEY       | value                   |
+| PHONE       | 登录手机号|
+| PASSWORD    | 登录密码|
+| ADDRESS     | 打卡定位地址|
+| LAT         | 纬度|
+| LNG         | 经度|
+| DISTRICT    | 地区：河南省-郑州市-金水区|
+| DEVICETOKEN | 你抓包得到的devicetoken|
+| SCKEY       | sever酱|
 - 4.DEVICETOKEN获取方法。
 [操作视频](https://mp.weixin.qq.com/s/9ww2373nxj3JyV4o1VAvAw)
 
