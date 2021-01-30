@@ -16,7 +16,6 @@
 | LNG         | 经度                    |
 | DEVICETOKEN | 你抓包得到的devicetoken |
 | SCKEY       | sever酱                 |
-
 - 4.DEVICETOKEN获取方法。
 [操作视频](https://mp.weixin.qq.com/s/9ww2373nxj3JyV4o1VAvAw)
 
