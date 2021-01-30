@@ -11,15 +11,15 @@
 - 2.fork一份到自己仓库
 
 - 3.打开settings，找到secrets，新建secret如下
- | secret_iD   | value                   |
+| secret_iD   | value                   |
 | ----------- | ----------------------- |
-| PHONE       | 登录手机号              |
-| PASSWORD    | 登录密码                |
-| ADDRESS     | 打卡定位地址            |
-| LAT         | 纬度                   |
-| LNG         | 经度                   |
-| DEVICETOKEN | 你抓包得到的devicetoken |
-| SCKEY       | sever酱                |
+| PHONE       | value                   |
+| PASSWORD    | value                   |
+| ADDRESS     | value                   |
+| LAT         | value                   |
+| LNG         | value                   |
+| DEVICETOKEN | value                   |
+| SCKEY       | value                   |
 - 4.DEVICETOKEN获取方法。
 [操作视频](https://mp.weixin.qq.com/s/9ww2373nxj3JyV4o1VAvAw)
 
