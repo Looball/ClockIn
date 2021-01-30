@@ -11,24 +11,18 @@ urllib3.disable_warnings()
 # --------------------------------------------------------------------------
 phone = sys.argv[1]
 pwd = sys.argv[2]
-name = sys.argv[3]
-ID_card = sys.argv[4]
-College = sys.argv[5] 
-profession = sys.argv[6]
-Class = sys.argv[7] 
-student_ID = sys.argv[8] 
-address = sys.argv[9]
-lat = sys.argv[10]
-lng = sys.argv[11]
-Positioning = {"address":address,"lat":float(lat),"lng":float(lng),"code":"1"}
-District = sys.argv[12] 
-deviceToken = sys.argv[13]
-sckey = sys.argv[14]
+address = sys.argv[3]
+lat = sys.argv[4]
+lng = sys.argv[5]
+district = sys.argv[6]
+deviceToken = sys.argv[7]
+sckey = sys.argv[8]
 # ---------------------------------------------------------------------------
 session = requests.Session()
-date = time.strftime('%Y年%m月',time.localtime())
-day = int(time.strftime('%d',time.localtime()))+1 # 时间慢了一点，加一下
-date = date+str(day)
+date = time.strftime('%Y年%m月', time.localtime())
+day = int(time.strftime('%d', time.localtime())) + 1  # 时间慢了一点，加一下
+date = date + str(day)
+
 
 # Wxpush()消息推送模块
 def Wxpush(msg):
@@ -37,8 +31,8 @@ def Wxpush(msg):
         err = requests.get(url)
         if not err.json()['errno']:
             break
-            
-            
+
+
 # 指点天下登录模块
 def login():
     url = 'http://app.zhidiantianxia.cn/api/Login/pwd'
@@ -55,11 +49,11 @@ def login():
     data = {
         'phone': phone,
         'password': encoded_pwd,
-        'mobileSystem': '9',
+        'mobileSystem': '10',
         'appVersion': '1.6.4',
-        'mobileVersion': 'V1809A',
-        'deviceToken': deviceToken,  
-        'pushToken': '0868765546475757478765800CN01',
+        'mobileVersion': 'Mate30',
+        'deviceToken': deviceToken,
+        'pushToken': '0938765546475757478765800CN01',
         'romInfo': 'hw'
     }
 
@@ -81,23 +75,22 @@ def sign_in(token):
         'axy-phone': phone,
         'axy-token': token,
         'Content-Type': 'application/json',
-        'user-agent': 'V1809A(Android/9) (com.axy.zhidian/1.6.3) Weex/0.18.0 1080x2141',
+        'user-agent': 'TAS-AN00(Android/5.1.1) (com.axy.zhidian/1.5.5) Weex/0.18.0 720x1280',
         'Host': 'zua.zhidiantianxia.cn',
         'Connection': 'Keep-Alive',
         'Accept-Encoding': 'gzip',
         'Content-Length': '536'
     }
-    datason = {"location": Positioning, "name": name, "phone": phone, "credentialType": "身份证",
-               "credentialCode": ID_card,
-               "college": College, "major": profession, "className": Class, "code": student_ID, "nowLocation": District,
-               "temperature": "36.6", "observation": "否", "confirmed": "否", "goToHuiBei": "否", "contactIllPerson": "否",
-               "isFamilyStatus": "否", "health": 0, "help": ""}
-    data = {
-        "health": 0,
-        "student": "1",
-        "content": str(datason)
-    }
-    data = json.dumps(data)
+    data = {"health": 0,
+            "student": 1,
+            "templateId": 2,
+            "content": {"location": {"address": address, "lat": lat, "lng": lng, "code": "1"}, "temperature": "36.6",
+                        "health": "是", "observation": "否", "confirmed": "否", "haveCOVIDInPlaceOfAbode": "否",
+                        "goToHuiBei": "否", "contactIllPerson": "否", "haveYouEverBeenAbroad": "否",
+                        "familyPeopleNum": "4", "isFamilyHealth": "否", "isFamilyColdChain": "否", "isFamilyStatus": "否",
+                        "familyPeopleIsAway": "否", "hasYourFamilyEverBeenAbroad": "否", "leave": "否",
+                        "isYesterdayMove": "否", "admission": "是", "help": "", "nowLocation": district}}
+    data = json.dumps(data, ensure_ascii=False)
     response = session.post(url=url, headers=header, data=data)
     if response.json()['status'] == 1:
         msg = '打卡成功'
@@ -113,7 +106,7 @@ def get_signInId(token):
     header = {
         'axy-phone': phone,
         'axy-token': token,
-        'user-agent': 'BKL-AL20(Android/10) (com.axy.zhidian/1.5.8) Weex/0.18.0 1080x2160',
+        'user-agent': 'TAS-AN00(Android/5.1.1) (com.axy.zhidian/1.5.5) Weex/0.18.0 720x1280',
         'Host': 'zua.zhidiantianxia.cn',
         'Connection': 'Keep-Alive',
         'Accept-Encoding': 'gzip'
@@ -136,16 +129,16 @@ def sign_in_evening(token):
         'axy-phone': phone,
         'axy-token': token,
         'Content-Type': 'application/json',
-        'user-agent': 'BKL-AL20(Android/10) (com.axy.zhidian/1.5.8) Weex/0.18.0 1080x2160',
+        'user-agent': 'TAS-AN00(Android/5.1.1) (com.axy.zhidian/1.5.5) Weex/0.18.0 720x1280',
         'Host': 'zua.zhidiantianxia.cn',
         'Connection': 'Keep-Alive',
         'Accept-Encoding': 'gzip',
         'Content-Length': '146'
     }
     data = {
-        "locale": str(Positioning["address"]),
-        "lat": Positioning["lat"],
-        "lng": Positioning["lng"],
+        "locale": address,
+        "lat": lat,
+        "lng": lng,
         "signInId": get_signInId(token)
     }
     data = json.dumps(data)
@@ -157,12 +150,13 @@ def sign_in_evening(token):
     msg = parse.quote_plus(response.json()['msg'])
     Wxpush(msg)
 
-if __name__ =="__main__":
+
+if __name__ == "__main__":
     token = login()
     time.sleep(3)
     now_H = int(time.strftime("%H"))
     if flag:
-        if 14 <= now_H <= 15:      # 世界协调时间
+        if 14 <= now_H <= 15:  # 世界协调时间
             sign_in_evening(token)
         else:
             sign_in(token)
