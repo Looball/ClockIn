@@ -81,15 +81,16 @@ def sign_in(token):
         'Accept-Encoding': 'gzip',
         'Content-Length': '536'
     }
-    data = {"health": 0,
-            "student": 1,
-            "templateId": 2,
-            "content": {"location": {"address": address, "lat": lat, "lng": lng, "code": "1"}, "temperature": "36.6",
+    content = {"location": {"address": address, "lat": lat, "lng": lng, "code": "1"}, "temperature": "36.6",
                         "health": "是", "observation": "否", "confirmed": "否", "haveCOVIDInPlaceOfAbode": "否",
                         "goToHuiBei": "否", "contactIllPerson": "否", "haveYouEverBeenAbroad": "否",
                         "familyPeopleNum": "4", "isFamilyHealth": "否", "isFamilyColdChain": "否", "isFamilyStatus": "否",
                         "familyPeopleIsAway": "否", "hasYourFamilyEverBeenAbroad": "否", "leave": "否",
-                        "isYesterdayMove": "否", "admission": "是", "help": "", "nowLocation": district}}
+                        "isYesterdayMove": "否", "admission": "是", "help": "", "nowLocation": district}
+    data = {"health": 0,
+            "student": 1,
+            "templateId": 2,
+            "content": str(content)}
     data = json.dumps(data)
     response = session.post(url=url, headers=header, data=data)
     if response.json()['status'] == 1:
@@ -156,7 +157,7 @@ if __name__ == "__main__":
     time.sleep(3)
     now_H = int(time.strftime("%H"))
     if flag:
-        if 14 <= now_H <= 15:  # 世界协调时间
+        if 15 <= now_H <= 16:  # 世界协调时间
             sign_in_evening(token)
         else:
             sign_in(token)
