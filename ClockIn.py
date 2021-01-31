@@ -90,7 +90,7 @@ def sign_in(token):
                         "familyPeopleNum": "4", "isFamilyHealth": "否", "isFamilyColdChain": "否", "isFamilyStatus": "否",
                         "familyPeopleIsAway": "否", "hasYourFamilyEverBeenAbroad": "否", "leave": "否",
                         "isYesterdayMove": "否", "admission": "是", "help": "", "nowLocation": district}}
-    data = json.dumps(data, ensure_ascii=False)
+    data = json.dumps(data)
     response = session.post(url=url, headers=header, data=data)
     if response.json()['status'] == 1:
         msg = '打卡成功'
